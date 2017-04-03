@@ -20,6 +20,10 @@ int main()
   TYPE* x= malloc(N*sizeof(TYPE));
 
   inicializar(p,rho,v,x,N,delta_x);
+
+  
+  
+  return (0);
   
 }
 
