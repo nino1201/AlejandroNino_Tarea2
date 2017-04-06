@@ -19,8 +19,6 @@ void actualizaF(TYPE *u1,TYPE *u2,TYPE *u3,TYPE *f1,TYPE *f2,TYPE *f3);
 
 int main()
 {
-  TYPE delta_t=0.1;
-
   TYPE* p= malloc (N*sizeof(TYPE));
   TYPE* rho= malloc(N*sizeof(TYPE));
   TYPE* v= malloc(N*sizeof(TYPE));
