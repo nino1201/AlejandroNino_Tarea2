@@ -205,3 +205,16 @@ void init_problem(physics_grid *P,U_grid *U,F_grid *F,int problem)
   init_U(U,P,problem);
   init_F(F,P,problem);
 }
+
+void initMatrixP(physics_grid *P,U_grid *U,F_grid *F,int problem)
+{
+  int i;
+  int j;
+  int k;
+  N=P->N_cells
+  for(i=0;i<N;i++)
+  {
+    P->p[i]=101325;
+    P->rho[i]=1.176;
+   } 
+}
