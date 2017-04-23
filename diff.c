@@ -8,7 +8,7 @@ void CalFx(U_grid *U, F_grid *Fx)
   int i;
   int j;
   int k;
-  FLOAT N = U->N_cells;
+  FLOAT N = U->N_x;
 
   for(i=0;i<N;i++)
     {
@@ -39,7 +39,7 @@ void CalFy( U_grid *U, F_grid *Fy)
   int i;
   int j;
   int k;
-  FLOAT N = U->N_cells;
+  FLOAT N = U->N_x;
 
   for(i=0;i<N;i++)
     {
@@ -71,7 +71,7 @@ void CalFz( U_grid *U, F_grid *Fz)
   int i;
   int j;
   int k;
-  FLOAT N = P->N_cells;
+  FLOAT N = P->N_x;
 
   for(i=0;i<N;i++)
     {
@@ -136,7 +136,7 @@ void CalculateFG(physics_grid *P, U_grid *U,F_grid *Fx1,F_grid *Fx2,F_grid *Fy1,
   int j;
   int k;
 
-  
+  N=U->N_x;
   for(i=1;i<N-1;i++){
     for(j=1;j<N-1;j++){
       for(k=1;k<N-1;k++){
@@ -223,7 +223,8 @@ void VolumenesFinitos( U_grid *U)
   int i;
   int j;
   int k;
-
+	
+  N=U->N_x;
   FLOAT dt=time(U);  
   for(i=0;i<N;i++)
     {
