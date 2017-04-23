@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void CalFx(physics_grid *P, U_grid *U, F_grid *Fx)
+void CalFx(U_grid *U, F_grid *Fx)
 {
   int i;
   int j;
   int k;
-  FLOAT N = P->N_cells;
+  FLOAT N = U->N_cells;
 
   for(i=0;i<N;i++)
     {
@@ -22,7 +22,7 @@ void CalFx(physics_grid *P, U_grid *U, F_grid *Fx)
 	U3=U->U_3[t(i,j,k)];
 	U4=U->U_4[t(i,j,k)];
 	U5=U->U_5[t(i,j,k)];
-	PR=P->p[t(i,j,k)];
+	PR=PR(U1,U2,U3,U4,U5);
   
 	Fx->F_1[t(i,j,k)]=U2;
 	Fx->F_2[t(i,j,k)]=pow(U2,2)/U1+PR;
@@ -34,12 +34,12 @@ void CalFx(physics_grid *P, U_grid *U, F_grid *Fx)
     }
 }
 
-void CalFy(physics_grid *P, U_grid *U, F_grid *Fy)
+void CalFy( U_grid *U, F_grid *Fy)
 {
   int i;
   int j;
   int k;
-  FLOAT N = P->N_cells;
+  FLOAT N = U->N_cells;
 
   for(i=0;i<N;i++)
     {
@@ -53,8 +53,8 @@ void CalFy(physics_grid *P, U_grid *U, F_grid *Fy)
 	U3=U->U_3[t(i,j,k)];
 	U4=U->U_4[t(i,j,k)];
 	U5=U->U_5[t(i,j,k)];
-	PR=P->p[t(i,j,k)];
-
+	PR=PR(U1,U2,U3,U4,U5);
+	      
 	Fy->F_1[t(i,j,k)]=U3;
 	Fy->F_2[t(i,j,k)]=U2*U3/U1;
 	Fy->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
@@ -66,7 +66,7 @@ void CalFy(physics_grid *P, U_grid *U, F_grid *Fy)
     }
 }
 
-void CalFz(physics_grid *P, U_grid *U, F_grid *Fz)
+void CalFz( U_grid *U, F_grid *Fz)
 {
   int i;
   int j;
@@ -85,7 +85,7 @@ void CalFz(physics_grid *P, U_grid *U, F_grid *Fz)
 	U3=U->U_3[t(i,j,k)];
 	U4=U->U_4[t(i,j,k)];
 	U5=U->U_5[t(i,j,k)];
-	PR=P->p[t(i,j,k)];
+	PR=PR(U1,U2,U3,U4,U5);
 
 	Fz->F_1[t(i,j,k)]=U3;
 	Fz->F_2[t(i,j,k)]=U2*U3/U1;
@@ -102,9 +102,9 @@ void CalFz(physics_grid *P, U_grid *U, F_grid *Fz)
 /* Calcula los F */
 void CalculateF(physics_grid *P, U_grid *U, F_grid *Fx,F_grid *Fy,F_grid *Fz)
 {
-  CalFx(P,U,Fx);
-  CalFy(P,U,Fy);
-  CalFz(P,U,Fz);
+  CalFx(U,Fx);
+  CalFy(U,Fy);
+  CalFz(U,Fz);
 }
 
 /* Calcula todos los F gorritos */
@@ -202,7 +202,7 @@ void VolumenesFinitos( U_grid *U)
   P_aux = create_physics_grid();
   init_P(Paux,SEDOV);
   U_aux = create_U_grid();
-  init_U(Uaux,SEDOV);
+  init_U(Uaux,Paux,SEDOV);
   
   Fx1 = create_F_grid();
   Fx2 = create_F_grid();
@@ -279,3 +279,7 @@ FLOAT e(FLOAT p,FLOAT rho)
   return p/(rho*(GAMMA-1))
 }
 
+FLOAT PR(FLOAT U1,FLOAT U2,FLOAT U3,FLOAT U4,FLOAT U5)
+{
+	return (GAMMA-1)*(U3-0.5*U2*U2/(U1));
+}
