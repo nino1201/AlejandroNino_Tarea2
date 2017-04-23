@@ -17,18 +17,18 @@ void CalFx(physics_grid *P, U_grid *U, F_grid *Fx)
       for(k=0;k<N;k++)
 	{
   
-	FLOAT U1=U->U_1[t(i,j,k)];
-	FLOAT U2=U->U_2[t(i,j,k)];
-	FLOAT U3=U->U_3[t(i,j,k)];
-	FLOAT U4=U->U_4[t(i,j,k)];
-	FLOAT U5=U->U_5[t(i,j,k)];
-	FLOAT PR=P->p[t(i,j,k)];
+	U1=U->U_1[t(i,j,k)];
+	U2=U->U_2[t(i,j,k)];
+	U3=U->U_3[t(i,j,k)];
+	U4=U->U_4[t(i,j,k)];
+	U5=U->U_5[t(i,j,k)];
+	PR=P->p[t(i,j,k)];
   
-	FLOAT Fx->F_1[t(i,j,k)]=U2;
-	FLOAT Fx->F_2[t(i,j,k)]=pow(U2,2)/U1+PR;
-	FLOAT Fx->F_3[t(i,j,k)]=U2*U3/U1;
-	FLOAT Fx->F_4[t(i,j,k)]=U2*U4/U1;
-	FLOAT Fx->F_5[t(i,j,k)]=U2*(U5+PR)/U1;
+	Fx->F_1[t(i,j,k)]=U2;
+	Fx->F_2[t(i,j,k)]=pow(U2,2)/U1+PR;
+	Fx->F_3[t(i,j,k)]=U2*U3/U1;
+	Fx->F_4[t(i,j,k)]=U2*U4/U1;
+	Fx->F_5[t(i,j,k)]=U2*(U5+PR)/U1;
       }
      }
     }
@@ -48,19 +48,18 @@ void CalFy(physics_grid *P, U_grid *U, F_grid *Fy)
       for(k=0;k<N;k++)
 	{
   
-	FLOAT U1=U->U_1[t(i,j,k)];
-	FLOAT U2=U->U_2[t(i,j,k)];
-	FLOAT U3=U->U_3[t(i,j,k)];
-	FLOAT U4=U->U_4[t(i,j,k)];
-	FLOAT U5=U->U_5[t(i,j,k)];
-	FLOAT PR=P->p[t(i,j,k)];
+	U1=U->U_1[t(i,j,k)];
+	U2=U->U_2[t(i,j,k)];
+	U3=U->U_3[t(i,j,k)];
+	U4=U->U_4[t(i,j,k)];
+	U5=U->U_5[t(i,j,k)];
+	PR=P->p[t(i,j,k)];
 
-	FLOAT Fy->F_1[t(i,j,k)]=U3;
-	FLOAT Fy->F_2[t(i,j,k)]=U2*U3/U1;
-	FLOAT Fy->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
-	FLOAT Fy->F_4[t(i,j,k)]=U3*U4/U1;
-	FLOAT Fy->F_5[t(i,j,k)]=U3*(U5+PR)/U1;
-
+	Fy->F_1[t(i,j,k)]=U3;
+	Fy->F_2[t(i,j,k)]=U2*U3/U1;
+	Fy->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
+	Fy->F_4[t(i,j,k)]=U3*U4/U1;
+	Fy->F_5[t(i,j,k)]=U3*(U5+PR)/U1;
 	
       }
      }
@@ -81,18 +80,18 @@ void CalFz(physics_grid *P, U_grid *U, F_grid *Fz)
       for(k=0;k<N;k++)
 	{
   
-	FLOAT U1=U->U_1[t(i,j,k)];
-	FLOAT U2=U->U_2[t(i,j,k)];
-	FLOAT U3=U->U_3[t(i,j,k)];
-	FLOAT U4=U->U_4[t(i,j,k)];
-	FLOAT U5=U->U_5[t(i,j,k)];
-	FLOAT PR=P->p[t(i,j,k)];
+	U1=U->U_1[t(i,j,k)];
+	U2=U->U_2[t(i,j,k)];
+	U3=U->U_3[t(i,j,k)];
+	U4=U->U_4[t(i,j,k)];
+	U5=U->U_5[t(i,j,k)];
+	PR=P->p[t(i,j,k)];
 
-	FLOAT Fz->F_1[t(i,j,k)]=U3;
-	FLOAT Fz->F_2[t(i,j,k)]=U2*U3/U1;
-	FLOAT Fz->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
-	FLOAT Fz->F_4[t(i,j,k)]=U3*U4/U1;
-	FLOAT Fz->F_5[t(i,j,k)]=U3*(U5+PR)/U1;
+	Fz->F_1[t(i,j,k)]=U3;
+	Fz->F_2[t(i,j,k)]=U2*U3/U1;
+	Fz->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
+	Fz->F_4[t(i,j,k)]=U3*U4/U1;
+	Fz->F_5[t(i,j,k)]=U3*(U5+PR)/U1;
 
 	
       }
@@ -180,12 +179,13 @@ void CalculateFG(physics_grid *P, U_grid *U,F_grid *Fx1,F_grid *Fx2,F_grid *Fy1,
     }
   }
 
-  CalFx(P,Ux1,Fx1);
-  CalFx(P,Ux2,Fx2);
-  CalFy(P,Uy1,Fy1);
-  CalFy(P,Uy2,Fy2);
-  CalFz(P,Uz1,Fz1);
-  CalFz(P,Uz2,Fz2);
+
+  CalFx(Ux1,Fx1);
+  CalFx(Ux2,Fx2);
+  CalFy(Uy1,Fy1);
+  CalFy(Uy2,Fy2);
+  CalFz(Uz1,Fz1);
+  CalFz(Uz2,Fz2);
 }
 
 void VolumenesFinitos( U_grid *U)
