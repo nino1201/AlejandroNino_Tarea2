@@ -199,11 +199,13 @@ void init_F(F_grid *F,physics_grid *P,int problem){
   
 }
 
-void init_problem(physics_grid *P,U_grid *U,F_grid *F,int problem)
+void init_problem(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int problem)
 {
   init_P(P,problem);
   init_U(U,P,problem);
-  init_F(F,P,problem);
+  init_F(Fx,P,problem);
+  init_F(Fy,P,problem);
+  init_F(Fz,P,problem);
 }
 
 void initMatrixP(physics_grid *P,U_grid *U,F_grid *F,int problem)
@@ -211,10 +213,53 @@ void initMatrixP(physics_grid *P,U_grid *U,F_grid *F,int problem)
   int i;
   int j;
   int k;
-  N=P->N_cells
+  N=P->N_cells;
   for(i=0;i<N;i++)
   {
     P->p[i]=101325;
     P->rho[i]=1.176;
    } 
+}
+void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int problem)
+{
+  int i;
+  int j;
+  int k;
+  N=P->N_cells;
+  for(i=0;i<N;i++)
+  {
+    Rho=P->rho[i];
+    pr=P->P[i];
+    u=P->vx[i];
+    v=P->vy[i];
+    w=P->vz[i];
+    E=pr/(GAMMA-1)+Rho*(pow(u,2)+pow(v,2)+pow(w,2))/2;
+  
+    U->U1[i]=Rho;
+    U->U2[i]=Rho*u;
+    U->U3[i]=Rho*v;
+    U->U4[i]=Rho*w;
+    U->U5[i]=E;
+    
+    Fx->F1[i]=Rho*u;
+    Fx->F2[i]=Rho*pow(u,2)+pr;
+    Fx->F3[i]=Rho*u*v;
+    Fx->F4[i]=Rho*u*w;
+    Fx->F5[i]=u*(E+p);
+    
+    Fy->F1[i]=Rho*v;
+    Fy->F2[i]=Rho*u*v;
+    Fy->F3[i]=Rho*pow(v,2)+pr;
+    Fy->F4[i]=Rho*w*v;
+    Fy->F5[i]=v*(E+p);
+    
+    Fz->F1[i]=Rho*w;
+    Fz->F2[i]=Rho*u*w;
+    Fz->F3[i]=Rho*v*w;
+    Fz->F4[i]=Rho*pow(w,2)+pr;
+    Fz->F5[i]=u*(E+p);
+    
+  }
+  
+  
 }
