@@ -198,3 +198,10 @@ void init_F(F_grid *F,physics_grid *P,int problem){
   init_to_zero(F->F_5, F->N_cells);
   
 }
+
+void init_problem(physics_grid *P,U_grid *U,F_grid *F,int problem)
+{
+  init_P(P,problem);
+  init_U(U,P,problem);
+  init_F(F,P,problem);
+}
