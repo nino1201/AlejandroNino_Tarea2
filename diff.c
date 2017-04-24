@@ -100,7 +100,7 @@ void CalFz( U_grid *U, F_grid *Fz)
 
 }
 /* Calcula los F */
-void CalculateF(physics_grid *P, U_grid *U, F_grid *Fx,F_grid *Fy,F_grid *Fz)
+void CalculateF(U_grid *U, F_grid *Fx,F_grid *Fy,F_grid *Fz)
 {
   CalFx(U,Fx);
   CalFy(U,Fy);
