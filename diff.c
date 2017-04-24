@@ -224,7 +224,7 @@ void VolumenesFinitos( U_grid *U)
   int j;
   int k;
 	
-  N=U->N_x;
+  int N=U->N_x;
   FLOAT dt=time(U);  
   for(i=0;i<N;i++)
     {
