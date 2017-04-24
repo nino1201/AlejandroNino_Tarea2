@@ -77,12 +77,12 @@ F_grid * create_F_grid(void){
 
 void init_P(physics_grid *P, int problem){
   
-  P->L_x = 250.0;
-  P->L_y = 250.0;
-  P->L_z = 250.0;    
-  P->delta_x = 5.0;
-  P->delta_y = 5.0;
-  P->delta_z = 5.0;
+  P->L_x = 256.0;
+  P->L_y = 256.0;
+  P->L_z = 256.0;    
+  P->delta_x = 2.0;
+  P->delta_y = 2.0;
+  P->delta_z = 2.0;
   P->N_x = (int)(P->L_x/P->delta_x);
   P->N_y = (int)(P->L_y/P->delta_y);
   P->N_z = (int)(P->L_z/P->delta_z);
@@ -222,19 +222,32 @@ void initMatrixP(physics_grid *P,U_grid *U,F_grid *F,int problem)
 }
 void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int problem)
 {
+  FLOAT Rho;
+  FLOAT pr;
+  FLOAT u;
+  FLOAT v;
+  FLOAT W;
+  FLOAT E;
   int i;
   int j;
   int k;
-  N=P->N_cells;
+  int N=P->N_cells;
   for(i=0;i<N;i++)
   {
+    
     Rho=P->rho[i];
     pr=P->P[i];
     u=P->vx[i];
     v=P->vy[i];
     w=P->vz[i];
-    E=pr/(GAMMA-1)+Rho*(pow(u,2)+pow(v,2)+pow(w,2))/2;
-  
+    if(i==4210752)
+      {
+	E=1e10;
+      }
+    else
+      { 
+	E=pr/(GAMMA-1)+Rho*(pow(u,2)+pow(v,2)+pow(w,2))/2;
+      }
     U->U1[i]=Rho;
     U->U2[i]=Rho*u;
     U->U3[i]=Rho*v;
