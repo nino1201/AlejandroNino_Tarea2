@@ -208,7 +208,7 @@ void init_problem(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int
   init_F(Fz,P,problem);
 }
 
-void initMatrixP(physics_grid *P,U_grid *U,F_grid *F,int problem)
+void initMatrixP(physics_grid *P,int problem)
 {
   int i;
   int j;
