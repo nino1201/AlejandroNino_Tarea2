@@ -118,12 +118,12 @@ void CalculateFG(physics_grid *P, U_grid *U,F_grid *Fx1,F_grid *Fx2,F_grid *Fy1,
   Uz1 = create_U_grid();
   Uz2 = create_U_grid();
   
-  init_U(P,Ux1,SEDOV);
-  init_U(P,Ux2,SEDOV);
-  init_U(P,Uy1,SEDOV);
-  init_U(P,Uy2,SEDOV);
-  init_U(P,Uz1,SEDOV);
-  init_U(P,Uz2,SEDOV);
+  init_U(Ux1,P,SEDOV);
+  init_U(Ux2,P,SEDOV);
+  init_U(Uy1,P,SEDOV);
+  init_U(Uy2,P,SEDOV);
+  init_U(Uz1,P,SEDOV);
+  init_U(Uz2,P,SEDOV);
   
   
   int i;
