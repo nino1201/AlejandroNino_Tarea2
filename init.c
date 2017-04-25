@@ -34,6 +34,7 @@ physics_grid * create_physics_grid(void){
   G->vx=NULL;
   G->vy=NULL;
   G->vz=NULL;
+ 
   return G;
 }
 
@@ -53,6 +54,15 @@ U_grid * create_U_grid(void){
   G->U3=NULL;
   G->U4=NULL;
   G->U5=NULL;
+  G->vx_MAX=0.0;
+  G->vy_MAX=0.0;
+  G->vz_MAX=0.0;
+  G->px_MAX=101325;
+  G->rhox_MAX=1.1768;
+  G->py_MAX=101325;
+  G->rhoy_MAX=1.1768;
+  G->pz_MAX=101325;
+  G->rhoz_MAX=1.1768;
   return G;
 }
 

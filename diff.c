@@ -4,7 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
 FLOAT PR(FLOAT U1,FLOAT U2,FLOAT U3,FLOAT U4,FLOAT U5);
+FLOAT time(U_grid *U);
+FLOAT cs(FLOAT p,FLOAT rho);
 void CalFx(U_grid *U, F_grid *Fx)
 {
   int i;
@@ -211,12 +214,13 @@ void VolumenesFinitos( U_grid *U)
   init_F(Fy2,Paux,SEDOV);
   init_F(Fz1,Paux,SEDOV);
   init_F(Fz2,Paux,SEDOV);
-  
+
+  /* Calcula todos los F gorrito */
   CalculateFG(Paux,U,Fx1,Fx2,Fy1,Fy2,Fz1,Fz2);
   
   int i;
   int Nc=U->N_cells;
-  FLOAT dt=0;  
+  FLOAT dt=time(U);  
   for(i=0;i<Nc;i++)
     {
       U_aux->U1[i]= U->U1[i];
@@ -233,16 +237,54 @@ void VolumenesFinitos( U_grid *U)
 	U->U3[i]=U_aux->U3[i]+dt/dx*(Fx1->F3[i]-Fx2->F3[i])+dt/dx*(Fy1->F3[i]-Fy2->F3[i])+dt/dx*(Fz1->F3[i]-Fz2->F3[i]);
 	U->U4[i]=U_aux->U4[i]+dt/dx*(Fx1->F4[i]-Fx2->F4[i])+dt/dx*(Fy1->F4[i]-Fy2->F4[i])+dt/dx*(Fz1->F4[i]-Fz2->F4[i]);
 	U->U5[i]=U_aux->U5[i]+dt/dx*(Fx1->F5[i]-Fx2->F5[i])+dt/dx*(Fy1->F5[i]-Fy2->F5[i])+dt/dx*(Fz1->F5[i]-Fz2->F5[i]);
+
+	/* halla la velocidad maxima y la guarda */
+	if(U->vx_MAX<(U->U2[i]/U->U1[i]))
+	  {
+	    U->vx_MAX=U->U2[i]/U->U1[i];
+	    U->rhox_MAX=U->U1[i];
+	    U->px_MAX=PR(U->U1[i],U->U2[i],U->U3[i],U->U4[i],U->U5[i]);
+	  }
+	if(U->vy_MAX<(U->U2[i]/U->U1[i]))
+	  {
+	    U->vy_MAX=U->U2[i]/U->U1[i];
+	    U->rhox_MAX=U->U1[i];
+	    U->px_MAX=PR(U->U1[i],U->U2[i],U->U3[i],U->U4[i],U->U5[i]);
+	  }
+	if(U->vy_MAX<(U->U2[i]/U->U1[i]))
+	  {
+	    U->vy_MAX=U->U2[i]/U->U1[i];
+	    U->rhox_MAX=U->U1[i];
+	    U->px_MAX=PR(U->U1[i],U->U2[i],U->U3[i],U->U4[i],U->U5[i]);
+	  }
   }
+  /* intento velocidades maximas */
+  
+}
+
+/* velocidad de la luz */
+FLOAT cs(FLOAT p,FLOAT rho)
+{
+  return pow(GAMMA*(p/rho),0.5);
 }
 
 /* debe retornar el dt para velocidades maximas */
-/* FLOAT time(U_grid *U) */
-/* { */
-/*   return 1.1; */
-/* } */
+FLOAT time(U_grid *U) 
+ { 
+   FLOAT max;
+   max=U->vx_MAX+cs(U->px_MAX,U->rhox_MAX);
+   if(max<U->vy_MAX+cs(U->py_MAX,U->rhoy_MAX))
+     {
+       max=U->vy_MAX+cs(U->py_MAX,U->rhoy_MAX);
+     }
+   if(max<U->vz_MAX+cs(U->pz_MAX,U->rhoz_MAX))
+     {
+       max=U->vz_MAX+cs(U->pz_MAX,U->rhoz_MAX);
+     }
+   return dx/max; 
+ } 
 
-/* calcula la energia */
+ /* calcula la energia */
 
 FLOAT E(FLOAT rho,FLOAT e,FLOAT u,FLOAT v,FLOAT w)
 {

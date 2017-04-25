@@ -24,6 +24,7 @@ typedef struct physics_grid_str
   FLOAT *vx;
   FLOAT *vy;
   FLOAT *vz;
+  
 } physics_grid;
 
 typedef struct U_grid_str{
@@ -36,6 +37,15 @@ typedef struct U_grid_str{
   FLOAT *U3;
   FLOAT *U4;
   FLOAT *U5;
+  FLOAT vx_MAX;
+  FLOAT vy_MAX;
+  FLOAT vz_MAX;
+  FLOAT px_MAX;
+  FLOAT rhox_MAX;
+  FLOAT py_MAX;
+  FLOAT rhoy_MAX;
+  FLOAT pz_MAX;
+  FLOAT rhoz_MAX;
 } U_grid;
 
 
