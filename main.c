@@ -9,8 +9,10 @@
 int main(int argc, char **argv){
   physics_grid * P_state;
   U_grid * U_state;
-  F_grid  * F_state;
-
+  Fx_grid  * F_state;
+  Fy_grid  * F_state;
+  Fz_grid  * F_state;
+  
   P_state = create_physics_grid();
   U_state = create_U_grid();
   Fx_state = create_F_grid();
@@ -20,10 +22,14 @@ int main(int argc, char **argv){
   init_problem(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
   initMatrixP(P_state);
   init_UandF(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
-  while()
-    {
-      VolumenesFinitos(U_state);
-    }
-
+  int j;
+  for(j=0;j<40;j++)
+  {
+    VolumenesFinitos(U_state);
+  }
+  for(j=0;j<U_state->N_cells;j++)
+  {
+    printf("%f %f %f %f %f\n",U_state->U1[j],U_state->U2[j],U_state->U3[j],U_state->U4[j],U_state->U5[j]); 
+  }
   return 0;
 }
