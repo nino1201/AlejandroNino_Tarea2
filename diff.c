@@ -1,5 +1,6 @@
 #include "struct.h"
 #include "converter.h"
+#include "init.h"
 #include <stdlib.h>
 #include <stdio.h>
 
