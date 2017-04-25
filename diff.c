@@ -245,15 +245,15 @@ void VolumenesFinitos( U_grid *U)
 	    U->rhox_MAX=U->U1[i];
 	    U->px_MAX=PR(U->U1[i],U->U2[i],U->U3[i],U->U4[i],U->U5[i]);
 	  }
-	if(U->vy_MAX<(U->U2[i]/U->U1[i]))
+	if(U->vy_MAX<(U->U3[i]/U->U1[i]))
 	  {
-	    U->vy_MAX=U->U2[i]/U->U1[i];
+	    U->vy_MAX=U->U3[i]/U->U1[i];
 	    U->rhox_MAX=U->U1[i];
 	    U->px_MAX=PR(U->U1[i],U->U2[i],U->U3[i],U->U4[i],U->U5[i]);
 	  }
-	if(U->vy_MAX<(U->U2[i]/U->U1[i]))
+	if(U->vy_MAX<(U->U4[i]/U->U1[i]))
 	  {
-	    U->vy_MAX=U->U2[i]/U->U1[i];
+	    U->vy_MAX=U->U4[i]/U->U1[i];
 	    U->rhox_MAX=U->U1[i];
 	    U->px_MAX=PR(U->U1[i],U->U2[i],U->U3[i],U->U4[i],U->U5[i]);
 	  }
