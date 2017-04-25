@@ -2,7 +2,7 @@
 #define STRUCT_H
 
 #define GAMMA 1.4
-
+#define dx 2
 #define SEDOV 1
 
 #define FLOAT double
