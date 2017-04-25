@@ -2,6 +2,7 @@
 #include "converter.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 void init_to_zero(FLOAT *p, int n_points){
   int i;
@@ -211,8 +212,7 @@ void init_problem(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int
 void initMatrixP(physics_grid *P,int problem)
 {
   int i;
-  int j;
-  int k;
+
   int N=P->N_cells;
   for(i=0;i<N;i++)
   {
@@ -229,8 +229,6 @@ void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int p
   FLOAT w;
   FLOAT E;
   int i;
-  int j;
-  int k;
   int N=P->N_cells;
   for(i=0;i<N;i++)
   {

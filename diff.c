@@ -215,9 +215,6 @@ void VolumenesFinitos( U_grid *U)
   CalculateFG(Paux,U,Fx1,Fx2,Fy1,Fy2,Fz1,Fz2);
   
   int i;
-  int j;
-  int k;
-	
   int Nc=U->N_cells;
   FLOAT dt=0;  
   for(i=0;i<Nc;i++)
