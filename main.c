@@ -9,9 +9,9 @@
 int main(int argc, char **argv){
   physics_grid * P_state;
   U_grid * U_state;
-  Fx_grid  * F_state;
-  Fy_grid  * F_state;
-  Fz_grid  * F_state;
+  F_grid  * Fx_state;
+  F_grid  * Fy_state;
+  F_grid  * Fz_state;
   
   P_state = create_physics_grid();
   U_state = create_U_grid();
@@ -20,7 +20,7 @@ int main(int argc, char **argv){
   Fz_state = create_F_grid();
   
   init_problem(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
-  initMatrixP(P_state);
+  initMatrixP(P_state,SEDOV);
   init_UandF(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
   int j;
   for(j=0;j<40;j++)

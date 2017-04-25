@@ -28,7 +28,7 @@ physics_grid * create_physics_grid(void){
   G->N_y=0;
   G->N_z=0;
   G->N_cells=0;
-  G->p=NULL;
+  G->P=NULL;
   G->rho=NULL;
   G->vx=NULL;
   G->vy=NULL;
@@ -47,11 +47,11 @@ U_grid * create_U_grid(void){
   G->N_y=0.0;
   G->N_z=0.0;
   G->N_cells=0.0;
-  G->U_1=NULL;
-  G->U_2=NULL;
-  G->U_3=NULL;
-  G->U_4=NULL;
-  G->U_5=NULL;
+  G->U1=NULL;
+  G->U2=NULL;
+  G->U3=NULL;
+  G->U4=NULL;
+  G->U5=NULL;
   return G;
 }
 
@@ -65,11 +65,11 @@ F_grid * create_F_grid(void){
   G->N_y=0.0;
   G->N_z=0.0;
   G->N_cells=0.0;
-  G->F_1=NULL;
-  G->F_2=NULL;
-  G->F_3=NULL;
-  G->F_4=NULL;
-  G->F_5=NULL;
+  G->F1=NULL;
+  G->F2=NULL;
+  G->F3=NULL;
+  G->F4=NULL;
+  G->F5=NULL;
 
   return G;
 }
@@ -88,11 +88,11 @@ void init_P(physics_grid *P, int problem){
   P->N_z = (int)(P->L_z/P->delta_z);
   P->N_cells = P->N_x * P->N_y * P->N_z;
 
-  if(!(P->p=malloc(P->N_cells * sizeof(FLOAT)))){
+  if(!(P->P=malloc(P->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with pressure allocation");
     exit(1);
   }
-  init_to_zero(P->p, P->N_cells);
+  init_to_zero(P->P, P->N_cells);
   
   if(!(P->rho=malloc(P->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with pressure allocation");
@@ -128,35 +128,35 @@ void init_U(U_grid *U,physics_grid *P,int problem)
   U->N_cells = P->N_cells;
 
  
-  if(!(U->U_1=malloc(U->N_cells * sizeof(FLOAT)))){
+  if(!(U->U1=malloc(U->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with U_1 allocation");
     exit(1);
   }
-  init_to_zero(U->U_1, U->N_cells);
+  init_to_zero(U->U1, U->N_cells);
   
-  if(!(U->U_2=malloc(U->N_cells * sizeof(FLOAT)))){
+  if(!(U->U2=malloc(U->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with U_2 allocation");
     exit(1);
   }
-  init_to_zero(U->U_2, U->N_cells);
+  init_to_zero(U->U2, U->N_cells);
   
-  if(!(U->U_3=malloc(U->N_cells * sizeof(FLOAT)))){
+  if(!(U->U3=malloc(U->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with U_2 allocation");
     exit(1);
   }
-  init_to_zero(U->U_3, U->N_cells);
+  init_to_zero(U->U3, U->N_cells);
   
-  if(!(U->U_4=malloc(U->N_cells * sizeof(FLOAT)))){
+  if(!(U->U4=malloc(U->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with U_2 allocation");
     exit(1);
   }
-  init_to_zero(U->U_4, U->N_cells);
+  init_to_zero(U->U4, U->N_cells);
   
-  if(!(U->U_5=malloc(U->N_cells * sizeof(FLOAT)))){
+  if(!(U->U5=malloc(U->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with U_2 allocation");
     exit(1);
   }
-  init_to_zero(U->U_5, U->N_cells);
+  init_to_zero(U->U5, U->N_cells);
 
 }
 
@@ -167,35 +167,35 @@ void init_F(F_grid *F,physics_grid *P,int problem){
   F->N_cells = P->N_cells;
   
   
-  if(!(F->F_1=malloc(F->N_cells * sizeof(FLOAT)))){
+  if(!(F->F1=malloc(F->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with F_1_X allocation");
     exit(1);
   }
-  init_to_zero(F->F_1, F->N_cells);
+  init_to_zero(F->F1, F->N_cells);
   
-  if(!(F->F_2=malloc(F->N_cells * sizeof(FLOAT)))){
+  if(!(F->F2=malloc(F->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with F_2_X allocation");
     exit(1);
   }
-  init_to_zero(F->F_2, F->N_cells);
+  init_to_zero(F->F2, F->N_cells);
   
-  if(!(F->F_3=malloc(F->N_cells * sizeof(FLOAT)))){
+  if(!(F->F3=malloc(F->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with F_3_X allocation");
     exit(1);
   }
-  init_to_zero(F->F_3, F->N_cells);
+  init_to_zero(F->F3, F->N_cells);
   
-  if(!(F->F_4=malloc(F->N_cells * sizeof(FLOAT)))){
+  if(!(F->F4=malloc(F->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with F_4_X allocation");
     exit(1);
   }
-  init_to_zero(F->F_4, F->N_cells);
+  init_to_zero(F->F4, F->N_cells);
   
-  if(!(F->F_5=malloc(F->N_cells * sizeof(FLOAT)))){
+  if(!(F->F5=malloc(F->N_cells * sizeof(FLOAT)))){
     fprintf(stderr, "Problem with F_5_X allocation");
     exit(1);
   }
-  init_to_zero(F->F_5, F->N_cells);
+  init_to_zero(F->F5, F->N_cells);
   
 }
 
@@ -213,10 +213,10 @@ void initMatrixP(physics_grid *P,int problem)
   int i;
   int j;
   int k;
-  N=P->N_cells;
+  int N=P->N_cells;
   for(i=0;i<N;i++)
   {
-    P->p[i]=101325;
+    P->P[i]=101325;
     P->rho[i]=1.176;
    } 
 }
@@ -226,7 +226,7 @@ void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int p
   FLOAT pr;
   FLOAT u;
   FLOAT v;
-  FLOAT W;
+  FLOAT w;
   FLOAT E;
   int i;
   int j;
@@ -258,19 +258,19 @@ void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int p
     Fx->F2[i]=Rho*pow(u,2)+pr;
     Fx->F3[i]=Rho*u*v;
     Fx->F4[i]=Rho*u*w;
-    Fx->F5[i]=u*(E+p);
+    Fx->F5[i]=u*(E+pr);
     
     Fy->F1[i]=Rho*v;
     Fy->F2[i]=Rho*u*v;
     Fy->F3[i]=Rho*pow(v,2)+pr;
     Fy->F4[i]=Rho*w*v;
-    Fy->F5[i]=v*(E+p);
+    Fy->F5[i]=v*(E+pr);
     
     Fz->F1[i]=Rho*w;
     Fz->F2[i]=Rho*u*w;
     Fz->F3[i]=Rho*v*w;
     Fz->F4[i]=Rho*pow(w,2)+pr;
-    Fz->F5[i]=u*(E+p);
+    Fz->F5[i]=u*(E+pr);
     
   }
   

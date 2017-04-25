@@ -1,8 +1,9 @@
+#include "struct.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
-int t(i,j,k,L)
+int t(int i,int j,int k)
 {
-  return k*pow(L,2)+j*L+i
+  return (int)k*pow(L,2)+j*L+i;
 }

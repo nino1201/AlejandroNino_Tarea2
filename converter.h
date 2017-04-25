@@ -1,1 +1,1 @@
-int t(i,j,k,L);
+int t(i,j,k);
