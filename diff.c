@@ -6,98 +6,69 @@
 void CalFx(U_grid *U, F_grid *Fx)
 {
   int i;
-  int j;
-  int k;
-  FLOAT N = U->N_x;
+  int N = U->N_cells;
 
   for(i=0;i<N;i++)
-    {
-    for(j=0;j<N;j++)
-      {
-      for(k=0;k<N;k++)
-	{
-  
-	U1=U->U_1[t(i,j,k)];
-	U2=U->U_2[t(i,j,k)];
-	U3=U->U_3[t(i,j,k)];
-	U4=U->U_4[t(i,j,k)];
-	U5=U->U_5[t(i,j,k)];
+  {  
+	U1=U->U_1[i];
+	U2=U->U_2[i];
+	U3=U->U_3[i];
+	U4=U->U_4[i];
+	U5=U->U_5[i];
 	PR=PR(U1,U2,U3,U4,U5);
   
-	Fx->F_1[t(i,j,k)]=U2;
-	Fx->F_2[t(i,j,k)]=pow(U2,2)/U1+PR;
-	Fx->F_3[t(i,j,k)]=U2*U3/U1;
-	Fx->F_4[t(i,j,k)]=U2*U4/U1;
-	Fx->F_5[t(i,j,k)]=U2*(U5+PR)/U1;
-      }
-     }
-    }
+	Fx->F_1[i]=U2;
+	Fx->F_2[i]=pow(U2,2)/U1+PR;
+	Fx->F_3[i]=U2*U3/U1;
+	Fx->F_4[i]=U2*U4/U1;
+	Fx->F_5[i]=U2*(U5+PR)/U1;
+  }
 }
 
 void CalFy( U_grid *U, F_grid *Fy)
 {
   int i;
-  int j;
-  int k;
-  FLOAT N = U->N_x;
+  int N = U->N_cells;
 
   for(i=0;i<N;i++)
-    {
-    for(j=0;j<N;j++)
-      {
-      for(k=0;k<N;k++)
-	{
-  
-	U1=U->U_1[t(i,j,k)];
-	U2=U->U_2[t(i,j,k)];
-	U3=U->U_3[t(i,j,k)];
-	U4=U->U_4[t(i,j,k)];
-	U5=U->U_5[t(i,j,k)];
+  {  
+	U1=U->U_1[i];
+	U2=U->U_2[i];
+	U3=U->U_3[i];
+	U4=U->U_4[i];
+	U5=U->U_5[i];
 	PR=PR(U1,U2,U3,U4,U5);
 	      
-	Fy->F_1[t(i,j,k)]=U3;
-	Fy->F_2[t(i,j,k)]=U2*U3/U1;
-	Fy->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
-	Fy->F_4[t(i,j,k)]=U3*U4/U1;
-	Fy->F_5[t(i,j,k)]=U3*(U5+PR)/U1;
-	
-      }
-     }
-    }
+	Fy->F_1[i]=U3;
+	Fy->F_2[i]=U2*U3/U1;
+	Fy->F_3[i]=pow(U3,2)/U1+PR;
+	Fy->F_4[i]=U3*U4/U1;
+	Fy->F_5[i]=U3*(U5+PR)/U1;
+  }
 }
 
 void CalFz( U_grid *U, F_grid *Fz)
 {
   int i;
-  int j;
-  int k;
-  FLOAT N = P->N_x;
+
+  int N = P->N_cells;
 
   for(i=0;i<N;i++)
-    {
-    for(j=0;j<N;j++)
-      {
-      for(k=0;k<N;k++)
-	{
-  
-	U1=U->U_1[t(i,j,k)];
-	U2=U->U_2[t(i,j,k)];
-	U3=U->U_3[t(i,j,k)];
-	U4=U->U_4[t(i,j,k)];
-	U5=U->U_5[t(i,j,k)];
+  {
+	U1=U->U_1[i];
+	U2=U->U_2[i];
+	U3=U->U_3[i];
+	U4=U->U_4[i];
+	U5=U->U_5[i];
 	PR=PR(U1,U2,U3,U4,U5);
 
-	Fz->F_1[t(i,j,k)]=U3;
-	Fz->F_2[t(i,j,k)]=U2*U3/U1;
-	Fz->F_3[t(i,j,k)]=pow(U3,2)/U1+PR;
-	Fz->F_4[t(i,j,k)]=U3*U4/U1;
-	Fz->F_5[t(i,j,k)]=U3*(U5+PR)/U1;
+	Fz->F_1[i]=U3;
+	Fz->F_2[i]=U2*U3/U1;
+	Fz->F_3[i]=pow(U3,2)/U1+PR;
+	Fz->F_4[i]=U3*U4/U1;
+	Fz->F_5[i]=U3*(U5+PR)/U1;
 
-	
-      }
-     }
     }
-
 }
 /* Calcula los F */
 void CalculateF(U_grid *U, F_grid *Fx,F_grid *Fy,F_grid *Fz)
@@ -136,44 +107,44 @@ void CalculateFG(physics_grid *P, U_grid *U,F_grid *Fx1,F_grid *Fx2,F_grid *Fy1,
   int j;
   int k;
 
-  N=U->N_x;
+  int N=U->N_x;
   for(i=1;i<N-1;i++){
     for(j=1;j<N-1;j++){
       for(k=1;k<N-1;k++){
-	Ux1->U_1[t(i,j,k)]=(U->U_1[i-1,j,k]+U->U_1[i,j,k])/2;
-	Uy1->U_1[t(i,j,k)]=(U->U_1[i,j-1,k]+U->U_1[i,j,k])/2;
-	Uz1->U_1[t(i,j,k)]=(U->U_1[i,j,k-1]+U->U_1[i,j,k])/2;
-	Ux2->U_1[t(i,j,k)]=(U->U_1[i+1,j,k]+U->U_1[i,j,k])/2;
-	Uy2->U_1[t(i,j,k)]=(U->U_1[i,j+1,k]+U->U_1[i,j,k])/2;
-	Uz2->U_1[t(i,j,k)]=(U->U_1[i,j,k+1]+U->U_1[i,j,k])/2;
+	Ux1->U_1[t(i,j,k)]=(U->U_1[t(i-1,j,k)]+U->U_1[t(i,j,k)])/2;
+	Uy1->U_1[t(i,j,k)]=(U->U_1[t(i,j-1,k)]+U->U_1[t(i,j,k)])/2;
+	Uz1->U_1[t(i,j,k)]=(U->U_1[t(i,j,k-1)]+U->U_1[t(i,j,k)])/2;
+	Ux2->U_1[t(i,j,k)]=(U->U_1[t(i+1,j,k)]+U->U_1[t(i,j,k)])/2;
+	Uy2->U_1[t(i,j,k)]=(U->U_1[t(i,j+1,k)]+U->U_1[t(i,j,k)])/2;
+	Uz2->U_1[t(i,j,k)]=(U->U_1[t(i,j,k+1)]+U->U_1[t(i,j,k)])/2;
 
-	Ux1->U_2[t(i,j,k)]=(U->U_2[i-1,j,k]+U->U_2[i,j,k])/2;
-	Uy1->U_2[t(i,j,k)]=(U->U_2[i,j-1,k]+U->U_2[i,j,k])/2;
-	Uz1->U_2[t(i,j,k)]=(U->U_2[i,j,k-1]+U->U_2[i,j,k])/2;
-	Ux2->U_2[t(i,j,k)]=(U->U_2[i+1,j,k]+U->U_2[i,j,k])/2;
-	Uy2->U_2[t(i,j,k)]=(U->U_2[i,j+1,k]+U->U_2[i,j,k])/2;
-	Uz2->U_2[t(i,j,k)]=(U->U_2[i,j,k+1]+U->U_2[i,j,k])/2;
+	Ux1->U_2[t(i,j,k)]=(U->U_2[t(i-1,j,k))+U->U_2[t(i,j,k)])/2;
+	Uy1->U_2[t(i,j,k)]=(U->U_2[t(i,j-1,k)]+U->U_2[t(i,j,k)])/2;
+	Uz1->U_2[t(i,j,k)]=(U->U_2[t(i,j,k-1)]+U->U_2[t(i,j,k)])/2;
+	Ux2->U_2[t(i,j,k)]=(U->U_2[t(i+1,j,k)]+U->U_2[t(i,j,k)])/2;
+	Uy2->U_2[t(i,j,k)]=(U->U_2[t(i,j+1,k)]+U->U_2[t(i,j,k)])/2;
+	Uz2->U_2[t(i,j,k)]=(U->U_2[t(i,j,k+1)]+U->U_2[t(i,j,k)])/2;
 
-	Ux1->U_3[t(i,j,k)]=(U->U_3[i-1,j,k]+U->U_3[i,j,k])/2;
-	Uy1->U_3[t(i,j,k)]=(U->U_3[i,j-1,k]+U->U_3[i,j,k])/2;
-	Uz1->U_3[t(i,j,k)]=(U->U_3[i,j,k-1]+U->U_3[i,j,k])/2;
-	Ux2->U_3[t(i,j,k)]=(U->U_3[i+1,j,k]+U->U_3[i,j,k])/2;
-	Uy2->U_3[t(i,j,k)]=(U->U_3[i,j+1,k]+U->U_3[i,j,k])/2;
-	Uz2->U_3[t(i,j,k)]=(U->U_3[i,j,k+1]+U->U_3[i,j,k])/2;
+	Ux1->U_3[t(i,j,k)]=(U->U_3[t(i-1,j,k)]+U->U_3[t(i,j,k)])/2;
+	Uy1->U_3[t(i,j,k)]=(U->U_3[t(i,j-1,k)]+U->U_3[t(i,j,k)])/2;
+	Uz1->U_3[t(i,j,k)]=(U->U_3[t(i,j,k-1)]+U->U_3[t(i,j,k)])/2;
+	Ux2->U_3[t(i,j,k)]=(U->U_3[t(i+1,j,k)]+U->U_3[t(i,j,k)])/2;
+	Uy2->U_3[t(i,j,k)]=(U->U_3[t(i,j+1,k)]+U->U_3[t(i,j,k)])/2;
+	Uz2->U_3[t(i,j,k)]=(U->U_3[t(i,j,k+1)]+U->U_3[t(i,j,k)])/2;
 
-	Ux1->U_4[t(i,j,k)]=(U->U_4[i-1,j,k]+U->U_4[i,j,k])/2;
-	Uy1->U_4[t(i,j,k)]=(U->U_4[i,j-1,k]+U->U_4[i,j,k])/2;
-	Uz1->U_4[t(i,j,k)]=(U->U_4[i,j,k-1]+U->U_4[i,j,k])/2;
-	Ux2->U_4[t(i,j,k)]=(U->U_4[i+1,j,k]+U->U_4[i,j,k])/2;
-	Uy2->U_4[t(i,j,k)]=(U->U_4[i,j+1,k]+U->U_4[i,j,k])/2;
-	Uz2->U_4[t(i,j,k)]=(U->U_4[i,j,k+1]+U->U_4[i,j,k])/2;
+	Ux1->U_4[t(i,j,k)]=(U->U_4[t(i-1,j,k)]+U->U_4[t(i,j,k]))/2;
+	Uy1->U_4[t(i,j,k)]=(U->U_4[t(i,j-1,k)]+U->U_4[t(i,j,k]))/2;
+	Uz1->U_4[t(i,j,k)]=(U->U_4[t(i,j,k-1)]+U->U_4[t(i,j,k)])/2;
+	Ux2->U_4[t(i,j,k)]=(U->U_4[t(i+1,j,k)]+U->U_4[t(i,j,k)])/2;
+	Uy2->U_4[t(i,j,k)]=(U->U_4[t(i,j+1,k)]+U->U_4[t(i,j,k)])/2;
+	Uz2->U_4[t(i,j,k)]=(U->U_4[t(i,j,k+1)]+U->U_4[t(i,j,k)])/2;
 
-	Ux1->U_5[t(i,j,k)]=(U->U_5[i-1,j,k]+U->U_5[i,j,k])/2;
-	Uy1->U_5[t(i,j,k)]=(U->U_5[i,j-1,k]+U->U_5[i,j,k])/2;
-	Uz1->U_5[t(i,j,k)]=(U->U_5[i,j,k-1]+U->U_5[i,j,k])/2;
-	Ux2->U_5[t(i,j,k)]=(U->U_5[i+1,j,k]+U->U_5[i,j,k])/2;
-	Uy2->U_5[t(i,j,k)]=(U->U_5[i,j+1,k]+U->U_5[i,j,k])/2;
-	Uz2->U_5[t(i,j,k)]=(U->U_5[i,j,k+1]+U->U_5[i,j,k])/2;
+	Ux1->U_5[t(i,j,k)]=(U->U_5[t(i-1,j,k)]+U->U_5[t(i,j,k)])/2;
+	Uy1->U_5[t(i,j,k)]=(U->U_5[t(i,j-1,k)]+U->U_5[t(i,j,k)])/2;
+	Uz1->U_5[t(i,j,k)]=(U->U_5[t(i,j,k-1)]+U->U_5[t(i,j,k)])/2;
+	Ux2->U_5[t(i,j,k)]=(U->U_5[t(i+1,j,k)]+U->U_5[t(i,j,k)])/2;
+	Uy2->U_5[t(i,j,k)]=(U->U_5[t(i,j+1,k)]+U->U_5[t(i,j,k)])/2;
+	Uz2->U_5[t(i,j,k)]=(U->U_5[t(i,j,k+1)]+U->U_5[t(i,j,k)])/2;
 	
       }
     }
@@ -224,40 +195,25 @@ void VolumenesFinitos( U_grid *U)
   int j;
   int k;
 	
-  int N=U->N_x;
+  int Nc=U->N_cells;
   FLOAT dt=time(U);  
-  for(i=0;i<N;i++)
+  for(i=0;i<Nc;i++)
     {
-      for(i=0;i<N;i++)
-	{
-	  for(i=0;i<N;i++)
-	    {
-	      U_aux->U_1[t(i,j,k)]= U->U_1[t(i,j,k)];
-	      U_aux->U_2[t(i,j,k)]= U->U_2[t(i,j,k)];
-	      U_aux->U_3[t(i,j,k)]= U->U_3[t(i,j,k)];
-	      U_aux->U_4[t(i,j,k)]= U->U_4[t(i,j,k)];
-	      U_aux->U_5[t(i,j,k)]= U->U_5[t(i,j,k)];
-	    }
-	} 
+      U_aux->U_1[i]= U->U_1[i];
+      U_aux->U_2[i]= U->U_2[i];
+      U_aux->U_3[i]= U->U_3[i];
+      U_aux->U_4[i]= U->U_4[i];
+      U_aux->U_5[i]= U->U_5[i];
     }
 
-  
-  for(i=0;i<N;i++)
-    {
-      for(i=0;i<N;i++)
-	{
-	  for(i=0;i<N;i++)
-	    {
-
-	      U->U_1[t(i,j,k)]=U_aux->U_1[t(i,j,k)]+dt/dx*(Fx1->F_1[t(i,j,k)]-Fx2->F_1[t(i,j,k)])+dt/dx*(Fy1->F_1[t(i,j,k)]-Fy2->F_1[t(i,j,k)])+dt/dx*(Fz1->F_1[t(i,j,k)]-Fz2->F_1[t(i,j,k)]);
-	      U->U_2[t(i,j,k)]=U_aux->U_2[t(i,j,k)]+dt/dx*(Fx1->F_2[t(i,j,k)]-Fx2->F_2[t(i,j,k)])+dt/dx*(Fy1->F_2[t(i,j,k)]-Fy2->F_2[t(i,j,k)])+dt/dx*(Fz1->F_2[t(i,j,k)]-Fz2->F_2[t(i,j,k)]);
-	      U->U_3[t(i,j,k)]=U_aux->U_3[t(i,j,k)]+dt/dx*(Fx1->F_3[t(i,j,k)]-Fx2->F_3[t(i,j,k)])+dt/dx*(Fy1->F_3[t(i,j,k)]-Fy2->F_3[t(i,j,k)])+dt/dx*(Fz1->F_3[t(i,j,k)]-Fz2->F_3[t(i,j,k)]);
-	      U->U_4[t(i,j,k)]=U_aux->U_4[t(i,j,k)]+dt/dx*(Fx1->F_4[t(i,j,k)]-Fx2->F_4[t(i,j,k)])+dt/dx*(Fy1->F_4[t(i,j,k)]-Fy2->F_4[t(i,j,k)])+dt/dx*(Fz1->F_4[t(i,j,k)]-Fz2->F_4[t(i,j,k)]);
-	      U->U_5[t(i,j,k)]=U_aux->U_5[t(i,j,k)]+dt/dx*(Fx1->F_5[t(i,j,k)]-Fx2->F_5[t(i,j,k)])+dt/dx*(Fy1->F_5[t(i,j,k)]-Fy2->F_5[t(i,j,k)])+dt/dx*(Fz1->F_5[t(i,j,k)]-Fz2->F_5[t(i,j,k)])
-	      
-	    }
-	}
-    }
+  for(i=0;i<Nc;i++)
+  {
+	U->U_1[i]=U_aux->U_1[i]+dt/dx*(Fx1->F_1[i]-Fx2->F_1[i])+dt/dx*(Fy1->F_1[i]-Fy2->F_1[i])+dt/dx*(Fz1->F_1[i]-Fz2->F_1[i]);
+	U->U_2[i]=U_aux->U_2[i]+dt/dx*(Fx1->F_2[i]-Fx2->F_2[i])+dt/dx*(Fy1->F_2[i]-Fy2->F_2[i])+dt/dx*(Fz1->F_2[i]-Fz2->F_2[i]);
+	U->U_3[i]=U_aux->U_3[i]+dt/dx*(Fx1->F_3[i]-Fx2->F_3[i])+dt/dx*(Fy1->F_3[i]-Fy2->F_3[i])+dt/dx*(Fz1->F_3[i]-Fz2->F_3[i]);
+	U->U_4[i]=U_aux->U_4[i]+dt/dx*(Fx1->F_4[i]-Fx2->F_4[i])+dt/dx*(Fy1->F_4[i]-Fy2->F_4[i])+dt/dx*(Fz1->F_4[i]-Fz2->F_4[i]);
+	U->U_5[i]=U_aux->U_5[i]+dt/dx*(Fx1->F_5[i]-Fx2->F_5[i])+dt/dx*(Fy1->F_5[i]-Fy2->F_5[i])+dt/dx*(Fz1->F_5[i]-Fz2->F_5[i]);
+  }
 }
 
 /* debe retornar el dt para velocidades maximas */
