@@ -88,11 +88,11 @@ void CalFz( U_grid *U, F_grid *Fz)
 	U5=U->U5[i];
 	pr=PR(U1,U2,U3,U4,U5);
 
-	Fz->F1[i]=U3;
-	Fz->F2[i]=U2*U3/U1;
-	Fz->F3[i]=pow(U3,2)/U1+pr;
-	Fz->F4[i]=U3*U4/U1;
-	Fz->F5[i]=U3*(U5+pr)/U1;
+	Fz->F1[i]=U4;
+	Fz->F2[i]=U2*U4/U1;
+	Fz->F3[i]=U3*U4/U1;
+	Fz->F4[i]=pow(U4,2)/U1+pr;
+	Fz->F5[i]=U4*(U5+pr)/U1;
 
     }
 }
@@ -127,8 +127,8 @@ void CalculateFG(physics_grid *P, U_grid *U,F_grid *Fx1,F_grid *Fx2,F_grid *Fy1,
   init_U(Uy2,P,SEDOV);
   init_U(Uz1,P,SEDOV);
   init_U(Uz2,P,SEDOV);
-  
-  
+
+    
   int i;
   int j;
   int k;
@@ -281,7 +281,7 @@ FLOAT time(U_grid *U)
      {
        max=U->vz_MAX+cs(U->pz_MAX,U->rhoz_MAX);
      }
-   return dx/max; 
+   return 0.5*dx/max; 
  } 
 
  /* calcula la energia */
@@ -300,5 +300,5 @@ FLOAT e(FLOAT p,FLOAT rho)
 
 FLOAT PR(FLOAT U1,FLOAT U2,FLOAT U3,FLOAT U4,FLOAT U5)
 {
-	return (GAMMA-1)*(U3-0.5*U2*U2/(U1));
+	return (GAMMA-1)*(U5-0.5*(U2*U2+U3*U3+U4*U4)/U1);
 }

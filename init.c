@@ -248,7 +248,7 @@ void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int p
     u=P->vx[i];
     v=P->vy[i];
     w=P->vz[i];
-    if(i==4210752)
+    if(i==t(64,64,64))
       {
 	E=1e10;
       }

@@ -23,13 +23,15 @@ int main(int argc, char **argv){
   initMatrixP(P_state,SEDOV);
   init_UandF(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
   int j;
-  for(j=0;j<40;j++)
+  for(j=0;j<10;j++)
   {
     VolumenesFinitos(U_state);
   }
-  for(j=0;j<U_state->N_cells;j++)
+	
+
+  for(j=64;j<95/*U_state->N_cells*/;j++)
   {
-    printf("%f %f %f %f %f\n",U_state->U1[j],U_state->U2[j],U_state->U3[j],U_state->U4[j],U_state->U5[j]); 
+   printf("%f %f %f %f\n",U_state->U5[t(j,64,64)],U_state->U1[t(j,64,64)],U_state->U2[t(j,64,64)]/U_state->U1[t(j,64,64)],PR(U_state->U1[t(j,64,64)],U_state->U2[t(j,64,64)],U_state->U3[t(j,64,64)],U_state->U4[t(j,64,64)],U_state->U5[t(j,64,64)])); 
   }
   return 0;
 }
