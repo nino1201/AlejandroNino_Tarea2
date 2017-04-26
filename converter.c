@@ -5,5 +5,5 @@
 
 int t(int i,int j,int k)
 {
-  return (int)k*pow(L,2)+j*L+i;
+  return i*L*L+j*L+k;
 }
