@@ -168,7 +168,7 @@ void init_U(U_grid *U,physics_grid *P,int problem)
     exit(1);
   }
   init_to_zero(U->U5, U->N_cells);
-
+init_Uc(P,U);
 }
 
 void init_F(F_grid *F,physics_grid *P,int problem){
@@ -230,7 +230,7 @@ void initMatrixP(physics_grid *P,int problem)
     P->rho[i]=1.176;
    } 
 }
-void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int problem)
+void init_Uc(physics_grid *P,U_grid *U)
 {
   FLOAT Rho;
   FLOAT pr;
@@ -261,6 +261,26 @@ void init_UandF(physics_grid *P,U_grid *U,F_grid *Fx,F_grid *Fy,F_grid *Fz,int p
     U->U3[i]=Rho*v;
     U->U4[i]=Rho*w;
     U->U5[i]=E;
+  }
+}
+void init_Fc(physics_grid *P,F_grid *Fx,F_grid *Fy,F_grid *Fz,int problem)	
+{ 
+  FLOAT Rho;
+  FLOAT pr;
+  FLOAT u;
+  FLOAT v;
+  FLOAT w;
+  FLOAT E;
+  int i;
+  int N=P->N_cells;
+  for(i=0;i<N;i++)
+  {
+    
+    Rho=P->rho[i];
+    pr=P->P[i];
+    u=P->vx[i];
+    v=P->vy[i];
+    w=P->vz[i];
     
     Fx->F1[i]=Rho*u;
     Fx->F2[i]=Rho*pow(u,2)+pr;
