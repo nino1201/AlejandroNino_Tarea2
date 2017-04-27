@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 
+void init_Uc(physics_grid *P,U_grid *U);
+
 void init_to_zero(FLOAT *p, int n_points){
   int i;
   for(i=0;i<n_points;i++){
