@@ -21,7 +21,8 @@ int main(int argc, char **argv){
   
   init_problem(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
   initMatrixP(P_state,SEDOV);
-  init_UandF(P_state, U_state, Fx_state,Fy_state,Fz_state, SEDOV);
+  init_Uc(P_state, U_state);
+  init_Fc(P_state, Fx_state,Fy_state,Fz_state, SEDOV);
   int j;
   for(j=0;j<10;j++)
   {
