@@ -10,5 +10,7 @@ plt.annotate("t= "+str(datos[2,1]),xy=(100,datos[2,0]),xytext=(115,datos[2,0]+1)
 
 
 plt.title("Rho vs r")
+plt.xlabel("Radios")
+plt.ylabel("Densidades promedio")
 plt.scatter(r,datos[:,0])
 plt.show()
