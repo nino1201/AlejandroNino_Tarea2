@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
+matplotlib.use('Agg')
 
 datos=np.genfromtxt("euler.dat")
 
