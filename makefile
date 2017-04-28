@@ -14,15 +14,14 @@ INCL = Makefile struct.h io.h init.h converter.h diff.h
 
 exec:$(OBJS)
 	$(CC) $(OBJS) $(LIBS) -o $(EXEC)
-	$(CC) shock.c -lm shock.out
+	$(CC) shock.c -lm 
 sedov:	
 	./euler.x > euler.dat
 shock:
-	./shock.out > data.dat
+	./a.out > data.dat
 plotshock:
 	python grf.py
 plotsedov:
 	python graficas.py
 clean:
-	rm -f $(OBJS) *~ core* ${EXEC}
-	
+	rm -f $(OBJS) *~ core* ${EXEC}CC = gcc
