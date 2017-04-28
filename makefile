@@ -7,13 +7,22 @@ OBJS = struct.o diff.o converter.o init.o io.o main.o
 INCL = Makefile struct.h io.h init.h converter.h diff.h
 
 
-all: $(EXEC)
 
 .c.o:
 	$(CC) $(CC_OPTIONS) -c $<
 
 
-$(EXEC):$(OBJS)
+exec:$(OBJS)
 	$(CC) $(OBJS) $(LIBS) -o $(EXEC)
+	$(CC) shock.c -lm shock.out
+sedov:	
+	./euler.x > euler.dat
+shock:
+	./shock.out > data.dat
+plotshock:
+	python grf.py
+plotsedov:
+	python graficas.py
 clean:
 	rm -f $(OBJS) *~ core* ${EXEC}
+	
